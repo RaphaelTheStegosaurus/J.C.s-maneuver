@@ -10,9 +10,26 @@ class Player extends EngineObject {
   }
   inputs() {
     let turn, acceleration, deceleration;
+    let move;
     if (isTouchDevice) {
       touchGamepadEnable = true;
+      move = gamepadStick(0);
     } else {
+      move = keyDirection();
+    }
+    this.turn(move.x);
+  }
+  turn(x) {
+    if (x == 0) {
+      this.angleVelocity = 0;
+      return;
+    }
+    if (x > 0) {
+      this.angleVelocity = 0.01;
+      return;
+    } else {
+      this.angleVelocity = -0.01;
+      return;
     }
   }
 }
