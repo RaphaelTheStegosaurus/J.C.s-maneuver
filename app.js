@@ -4,9 +4,15 @@ class Player extends EngineObject {
     super(pos, size);
     this.color = WHITE;
     this.tileInfo = new TileInfo(vec2(0, 0), vec2(32, 32), 0);
+    this.angleDamping = 0.95;
+    console.log(this);
   }
   update() {
+    debugText(`angle ${this.angle}`, vec2(0, 2));
+    debugText(`pos ${this.pos}`, vec2(this.pos.x, this.pos.y + 2));
     this.inputs();
+    cameraPos = this.pos;
+    super.update();
   }
   inputs() {
     let turn, acceleration, deceleration;
@@ -18,17 +24,39 @@ class Player extends EngineObject {
       move = keyDirection();
     }
     this.turn(move.x);
+    this.acceleration(move.y);
+  }
+  acceleration(y) {
+    if (y == 0) {
+      //   this.velocity.y = 0;
+      this.applyAcceleration(vec2(0, 0));
+      return;
+    }
+    if (y > 0) {
+      //   this.velocity.y = 0.01;
+      const acceleration = vec2().setAngle(this.angle, 0.001);
+      //   this.applyAcceleration(vec2(0, 0.01));
+      this.applyAcceleration(acceleration);
+      return;
+    }
   }
   turn(x) {
     if (x == 0) {
-      this.angleVelocity = 0;
+      //   this.angleVelocity = 0;
+      this.applyAngularAcceleration(0);
       return;
     }
     if (x > 0) {
-      this.angleVelocity = 0.01;
+      //   this.angle += 0.1;
+      //   this.localAngle += 0.1;
+      //   this.angleVelocity = 0.01;
+      this.applyAngularAcceleration(0.01);
       return;
     } else {
-      this.angleVelocity = -0.01;
+      //   this.angleVelocity = -0.01;
+      //   this.angle -= 0.1;
+      //   this.localAngle -= 0.1;
+      this.applyAngularAcceleration(-0.01);
       return;
     }
   }
