@@ -54,8 +54,15 @@ class Player extends EngineObject {
     }
   }
 }
+class Planet extends EngineObject {
+  constructor(pos, size) {
+    super(pos, size);
+    this.color = WHITE;
+  }
+}
 function gameInit() {
   new Player(vec2(0, 0), vec2(1, 2));
+  new Planet(vec2(10, 10), vec2(1, 1));
 }
 function gameUpdate() {}
 function gameUpdatePost() {}
