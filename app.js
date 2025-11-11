@@ -4,13 +4,17 @@ class Player extends EngineObject {
     super(pos, size);
     this.color = WHITE;
     this.tileInfo = new TileInfo(vec2(0, 0), vec2(32, 32), 0);
-    this.angleDamping = 0.95;
-    // this.velocity = vec2(0.01, 0.01);
-    console.log(this);
+    this.angleDamping = 0.99;
+    this.velocityDamping = 0.999;
+    this.ACCEL_MAGNITUDE = 0.0005;
   }
   update() {
-    debugText(`angle ${this.angle}`, vec2(0, 2));
+    // debugText(`angle ${this.angle}`, vec2(0, 2));
     debugText(`pos ${this.pos}`, vec2(this.pos.x, this.pos.y + 2));
+    // debugPoint(vec2(this.pos.x, this.pos.y + 2), WHITE, 0, this.angle);
+    // debugPoint(vec2(this.pos.x, this.pos.y + 4), WHITE, 0, this.angle);
+    // debugPoint(vec2(this.pos.x, this.pos.y + 6), WHITE, 0, this.angle);
+    // debugPoint(vec2(this.pos.x, this.pos.y + 8), WHITE, 0, this.angle);
     this.inputs();
     cameraPos = this.pos;
     this.setCollision();
@@ -32,15 +36,9 @@ class Player extends EngineObject {
       this.applyAcceleration(vec2(0, 0));
       return;
     }
-    if (y > 0) {
-      const acceleration = vec2().setAngle(this.angle, 0.001);
-      this.applyAcceleration(acceleration);
-      return;
-    } else {
-      const acceleration = vec2().setAngle(this.angle, -0.001);
-      this.applyAcceleration(acceleration);
-      return;
-    }
+    const accelerationMagnitude = this.ACCEL_MAGNITUDE * (y > 0 ? 1 : -1);
+    const acceleration = vec2().setAngle(this.angle, accelerationMagnitude);
+    this.applyAcceleration(acceleration);
   }
   turn(x) {
     if (x == 0) {
@@ -63,9 +61,11 @@ class Planet extends EngineObject {
     this.setCollision();
     this.Player = player;
     this.GRAVITY_RANGE = 20;
-    this.GRAVITY_STRENGTH = 0.0001;
+    this.GRAVITY_STRENGTH = 0.0005;
   }
   update() {
+    debugCircle(this.pos, this.GRAVITY_RANGE, CYAN);
+    debugCircle(this.pos, this.GRAVITY_RANGE / 4, RED);
     this.applyGravity();
     super.update();
   }
@@ -86,7 +86,7 @@ class Planet extends EngineObject {
 }
 function gameInit() {
   const player = new Player(vec2(0, 0), vec2(1, 2));
-  new Planet(vec2(10, 10), vec2(1, 1), player);
+  new Planet(vec2(5, 20), vec2(1, 1), player);
 }
 function gameUpdate() {}
 function gameUpdatePost() {}
