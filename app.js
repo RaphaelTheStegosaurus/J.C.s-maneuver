@@ -41,16 +41,11 @@ class Player extends EngineObject {
     this.applyAcceleration(acceleration);
   }
   turn(x) {
-    if (x == 0) {
-      this.applyAngularAcceleration(0);
-      return;
-    }
-    if (x > 0) {
-      this.applyAngularAcceleration(0.001);
-      return;
+    if (x != 0) {
+      const ROTATION_SPEED = 0.001;
+      this.applyAngularAcceleration(x * ROTATION_SPEED);
     } else {
-      this.applyAngularAcceleration(-0.001);
-      return;
+      this.applyAngularAcceleration(0);
     }
   }
 }
@@ -61,7 +56,8 @@ class Planet extends EngineObject {
     this.setCollision();
     this.Player = player;
     this.GRAVITY_RANGE = 20;
-    this.GRAVITY_STRENGTH = 0.0005;
+    this.MAX_ATTRACTION_RANGE = this.GRAVITY_RANGE / 4;
+    this.GRAVITY_STRENGTH = 0.0009;
   }
   update() {
     debugCircle(this.pos, this.GRAVITY_RANGE, CYAN);
@@ -74,7 +70,12 @@ class Planet extends EngineObject {
     const distance = delta.length();
     if (distance > 0 && distance < this.GRAVITY_RANGE) {
       const direction = delta.normalize();
-      const forceMagnitude = this.GRAVITY_STRENGTH / distance;
+      let forceMagnitude = 0;
+      if (distance <= this.MAX_ATTRACTION_RANGE) {
+        forceMagnitude = (this.GRAVITY_STRENGTH * 10) / (distance * distance);
+      } else {
+        forceMagnitude = (this.GRAVITY_STRENGTH * 2) / distance;
+      }
       const gravityAcceleration = direction.scale(forceMagnitude);
       this.Player.velocity = this.Player.velocity.add(gravityAcceleration);
       debugText(
