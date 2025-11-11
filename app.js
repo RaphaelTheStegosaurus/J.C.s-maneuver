@@ -33,6 +33,7 @@ class Player extends EngineObject {
   }
   acceleration(y) {
     if (y == 0) {
+      //   this.velocity = vec2(0, 0);
       this.applyAcceleration(vec2(0, 0));
       return;
     }
