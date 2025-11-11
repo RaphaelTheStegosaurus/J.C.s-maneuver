@@ -15,7 +15,6 @@ class Player extends EngineObject {
     super.update();
   }
   inputs() {
-    let turn, acceleration, deceleration;
     let move;
     if (isTouchDevice) {
       touchGamepadEnable = true;
@@ -28,34 +27,28 @@ class Player extends EngineObject {
   }
   acceleration(y) {
     if (y == 0) {
-      //   this.velocity.y = 0;
       this.applyAcceleration(vec2(0, 0));
       return;
     }
     if (y > 0) {
-      //   this.velocity.y = 0.01;
       const acceleration = vec2().setAngle(this.angle, 0.001);
-      //   this.applyAcceleration(vec2(0, 0.01));
+      this.applyAcceleration(acceleration);
+      return;
+    } else {
+      const acceleration = vec2().setAngle(this.angle, -0.001);
       this.applyAcceleration(acceleration);
       return;
     }
   }
   turn(x) {
     if (x == 0) {
-      //   this.angleVelocity = 0;
       this.applyAngularAcceleration(0);
       return;
     }
     if (x > 0) {
-      //   this.angle += 0.1;
-      //   this.localAngle += 0.1;
-      //   this.angleVelocity = 0.01;
       this.applyAngularAcceleration(0.01);
       return;
     } else {
-      //   this.angleVelocity = -0.01;
-      //   this.angle -= 0.1;
-      //   this.localAngle -= 0.1;
       this.applyAngularAcceleration(-0.01);
       return;
     }
