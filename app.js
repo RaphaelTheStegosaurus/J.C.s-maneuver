@@ -12,6 +12,7 @@ class Player extends EngineObject {
     debugText(`pos ${this.pos}`, vec2(this.pos.x, this.pos.y + 2));
     this.inputs();
     cameraPos = this.pos;
+    this.setCollision();
     super.update();
   }
   inputs() {
@@ -46,10 +47,10 @@ class Player extends EngineObject {
       return;
     }
     if (x > 0) {
-      this.applyAngularAcceleration(0.01);
+      this.applyAngularAcceleration(0.001);
       return;
     } else {
-      this.applyAngularAcceleration(-0.01);
+      this.applyAngularAcceleration(-0.001);
       return;
     }
   }
@@ -58,6 +59,7 @@ class Planet extends EngineObject {
   constructor(pos, size) {
     super(pos, size);
     this.color = WHITE;
+    this.setCollision();
   }
 }
 function gameInit() {
