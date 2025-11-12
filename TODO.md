@@ -4,3 +4,23 @@
 - [ ] Orbitar Parabolicamente
 - [ ] Orbitar Hiberbolicamente
 - [ ] Acelerar y perder impulso
+- [ ] Medidor de Energia
+- [ ] Medidor de dias transcurridos
+- [ ] Agregar Cuerpos celestes
+  - [ ] Sol
+  - [ ] Planetas
+  - [ ] Asteroides
+  - [ ] Cometas
+  - [ ] Meteoreos
+  - [ ] Agujeros Negros
+  - [ ] Supernovas
+  - [ ] Onda de SuperNova
+  - [ ] Quasar
+  - [ ] Estrella de Neutrones
+  - [ ] Pulsares
+  - [ ] Magentras
+- [ ] Ideas extras
+  - [ ] Viajar a  travez de agujeros de Gusanos
+  - [ ] Lasers
+  - [ ] Bombas
+  - [ ] Llamar a la estrella de la muerte
